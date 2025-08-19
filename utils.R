@@ -61,6 +61,11 @@ create_testevent <- function() {
     to_time = miss,
     to_weekday = miss,
     event = ev,
+    url = miss,
     created_at = Sys.time()
   )
+}
+
+send_signal <- function(x) {
+  system2("signal-cli", args = c("-u", Sys.getenv("RVAR_SINGALNUMBER"), "send", "-g", Sys.getenv("RVAR_SIGNALGROUP"), "-m", x))
 }

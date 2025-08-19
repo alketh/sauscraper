@@ -6,6 +6,7 @@ library(lubridate)
 library(DBI)
 library(RPostgres)
 library(openssl)
+library(knitr)
 
 source("utils.R")
 
@@ -55,8 +56,18 @@ out$time <- NULL
 out$id <- md5(apply(out, 1, paste, collapse = "|"))
 out$created_at <- Sys.time()
 
+# Add links
+links <- html_elements(content, "a")
+links <- html_attr(links, "href")
+is_link <- grepl("icalrepeat.detail", links)
+links <- links[is_link]
+
+can_links <- paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], links)
+
+out$url <- can_links
+
 # fix column order
-out <- out[, c("id", "from_date", "from_time", "from_weekday", "to_date", "to_time", "to_weekday", "event", "created_at")]
+out <- out[, c("id", "from_date", "from_time", "from_weekday", "to_date", "to_time", "to_weekday", "event", "url", "created_at")]
 
 # Add a testevent
 out <- create_testevent()
@@ -80,7 +91,21 @@ check <- length(new) > 0
 # Add new events and report
 if (check) {
   add <- out[out$id %in% new, ]
+  
+  send_signal("\"Neues Sau Event entdeckt\"")
+  
+  for (i in seq_len(nrow(add))) {
+    chr_url <- add$url[i]
+    send_signal(chr_url)
+  }
+  
+  send_signal("\"Ende der Übertragung!\"")
+  
   nn <- dbAppendTable(con, name = "events", value = add)
 }
+
+# display all events
+dd <- dbGetQuery(con, "select * from events")
+kable(dd)
 
 dbDisconnect(con)
