@@ -69,3 +69,11 @@ create_testevent <- function() {
 send_signal <- function(x) {
   system2("signal-cli", args = c("-u", Sys.getenv("RVAR_SINGALNUMBER"), "send", "-g", Sys.getenv("RVAR_SIGNALGROUP"), "-m", x))
 }
+
+create_testevent_simple <- function() {
+  tibble(
+    url = paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], "/this_is_a_test_event"),
+    created_at = Sys.time()
+  )
+}
+
