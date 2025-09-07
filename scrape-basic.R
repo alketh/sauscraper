@@ -3,8 +3,11 @@ library(rvest)
 library(tibble)
 library(DBI)
 library(RPostgres)
+library(knitr)
 
-source("utils.R")
+source("/opt/utils.R")
+
+print("starting")
 
 url <- Sys.getenv("RVAR_URL")
 
@@ -21,6 +24,8 @@ out <- tibble(url = can_links, created_at = Sys.time())
 
 # Add a testevent
 # out <- create_testevent_simple()
+
+print("db connect")
 
 con <- con_sau()
 
