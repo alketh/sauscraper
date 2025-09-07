@@ -4,8 +4,10 @@ library(tibble)
 library(DBI)
 library(RPostgres)
 library(knitr)
+library(blastula)
+library(glue)
 
-source("/opt/utils.R")
+source("utils.R")
 
 print("starting")
 
@@ -23,7 +25,7 @@ can_links <- paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], links)
 out <- tibble(url = can_links, created_at = Sys.time())
 
 # Add a testevent
-# out <- create_testevent_simple()
+out <- create_testevent_simple()
 
 print("db connect")
 
@@ -47,22 +49,47 @@ check <- length(new) > 0
 if (check) {
   add <- out[out$url %in% new, ]
   
-  send_signal("\"Neues Sau Event entdeckt\"")
+  # send_signal("\"Neues Sau Event entdeckt\"")
   
   # for (i in seq_len(nrow(add))) {
   #   chr_url <- add$url[i]
   #   send_signal(chr_url)
   # }
   
-  send_signal(paste0("'",paste(add$url, collapse = "\n"), "'"))
+  # send_signal(paste0("'",paste(add$url, collapse = "\n"), "'"))
   
-  send_signal("\"Ende der Übertragung!\"")
+  # send_signal("\"Ende der Übertragung!\"")
   
+  body_text <- glue("Neue Sauevents gefunden:\n\r{paste(add$url, collapse = '\n\r')}")
+  
+  footer_text <- glue("Sent on {Sys.Date()}. Powered by Sauevents!")
+  
+  recipients <- c(
+    Sys.getenv("RVAR_GMAIL")
+  )
+  
+  email <- compose_email(
+    body = md(body_text),
+    footer = footer_text
+  )
+  
+  print("send email")
+  
+  email %>% smtp_send(
+    from = Sys.getenv("RVAR_GMAIL"),
+    to = recipients,
+    subject = "Sauevents",
+    credentials = creds_file(file = "gmail_creds")
+  )
+
+  print("db push")
   
   nn <- dbAppendTable(con, name = "events_simple", value = add)
 }
 
 # display all events
+print("db pull")
+
 dd <- dbGetQuery(con, "select * from events_simple")
 kable(dd)
 

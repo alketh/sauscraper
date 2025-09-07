@@ -15,3 +15,7 @@ RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' >>"${R_HOME}
 RUN R -e "install.packages(c('remotes', 'renv'))"
 
 RUN R -e "options(renv.config.cache.enabled=FALSE);renv::restore(clean = FALSE, prompt = FALSE)"
+
+COPY utils.R .
+COPY scrape-basic.R .
+COPY email_creds .
