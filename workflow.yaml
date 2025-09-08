@@ -1,0 +1,10 @@
+on:
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  sauscrape:
+    runs-on: aketh/sauevents:1.0.1
+    steps:
+      - name: check new events
+        run: Rscript scrape-basic.R

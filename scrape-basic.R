@@ -64,9 +64,9 @@ if (check) {
   
   footer_text <- glue("Sent on {Sys.Date()}. Powered by Sauevents!")
   
-  recipients <- c(
-    Sys.getenv("RVAR_GMAIL")
-  )
+  recipients <- Sys.getenv("RVAR_EMAIL")
+  recipients <- strsplit(recipients, split = ",")[[1]]
+  recipients <- c(recipients, Sys.getenv("RVAR_GMAIL"))
   
   email <- compose_email(
     body = md(body_text),
@@ -79,7 +79,12 @@ if (check) {
     from = Sys.getenv("RVAR_GMAIL"),
     to = recipients,
     subject = "Sauevents",
-    credentials = creds_file(file = "gmail_creds")
+    credentials = creds_envvar(
+      host = Sys.getenv("RVAR_GMAIL_HOST"), 
+      port = as.integer(Sys.getenv("RVAR_GMAIL_PORT")), 
+      pass_envvar = "RVAR_GMAIL_TOKEN", 
+      user = Sys.getenv("RVAR_GMAIL")
+      )
   )
 
   print("db push")
