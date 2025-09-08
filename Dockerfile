@@ -18,4 +18,3 @@ RUN R -e "options(renv.config.cache.enabled=FALSE);renv::restore(clean = FALSE, 
 
 COPY utils.R .
 COPY scrape-basic.R .
-COPY email_creds .
