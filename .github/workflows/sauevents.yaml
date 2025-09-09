@@ -4,7 +4,8 @@ on:
 
 jobs:
   sauscrape:
-    runs-on: aketh/sauevents:1.0.1
+    runs-on: ubuntu-latest
+    container: aketh/sauevents:1.0.1
     steps:
       - name: check new events
         run: Rscript scrape-basic.R
