@@ -8,6 +8,16 @@ jobs:
     container: aketh/sauevents:1.0.2
     env:
       RVAR_URL: ${{ vars.RVAR_URL }}
+      RVAR_EMAIL: ${{ secrets.RVAR_EMAIL }}
+      RVAR_GMAIL: ${{ secrets.RVAR_GMAIL }}
+      RVAR_GMAIL_HOST: ${{ vars.RVAR_GMAIL_HOST }}
+      RVAR_GMAIL_PORT: ${{ vars.RVAR_GMAIL_PORT }}
+      RVAR_GMAIL_TOKEN: ${{ secrets.RVAR_GMAIL_TOKEN }}
+      RVAR_DBUSER: ${{ vars.RVAR_DBUSER }}
+      RVAR_DBPASSWORD: ${{ secrets.RVAR_DBPASSWORD }}
+      RVAR_DBHOST: ${{ vars.RVAR_DBHOST }}
+      RVAR_DBPORT: ${{ vars.RVAR_DBPORT }}
+      RVAR_DBNAME: ${{ vars.RVAR_DBNAME }}
     steps:
       - name: Login to dockerhub
         uses: docker/login-action@v3
