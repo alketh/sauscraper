@@ -12,5 +12,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Check out the repo
+        uses: actions/checkout@v5
+        
+      - name: debug
+        run: ls -la
+        
       - name: check new events
         run: Rscript scrape-basic.R
