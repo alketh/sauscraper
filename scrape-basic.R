@@ -1,3 +1,5 @@
+print(.libPaths())
+
 # we will only scrape urls here. They have all the info we need.
 library(rvest)
 library(tibble)
