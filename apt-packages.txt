@@ -2,3 +2,5 @@ libpq-dev
 libssl-dev
 libcurl4-openssl-dev
 libxml2-dev
+ca-certificates
+curl
