@@ -72,7 +72,7 @@ send_signal <- function(x) {
 
 create_testevent_simple <- function() {
   tibble(
-    url = paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], "/this_is_a_test_event"),
+    url = paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], "/this_is_a_test_event", runif(n = 1)),
     created_at = Sys.time()
   )
 }

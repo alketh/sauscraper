@@ -45,6 +45,8 @@ new <- out$url[!out$url %in% urls$url]
 
 check <- length(new) > 0
 
+if (!check) print("No new events present!")
+
 # Add new events and report
 if (check) {
   add <- out[out$url %in% new, ]
