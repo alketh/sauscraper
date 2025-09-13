@@ -101,4 +101,3 @@ dd <- dbGetQuery(con, "select * from events_simple")
 kable(dd)
 
 dbDisconnect(con)
-
