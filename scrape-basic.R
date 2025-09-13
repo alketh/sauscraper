@@ -1,11 +1,12 @@
 # renv::restore()
 
-print(.libPaths())
+# print(.libPaths())
 
 # .libPaths("/usr/local/lib/R/library")
-.libPaths("/usr/local/lib/R/site-library")
+# .libPaths("/usr/local/lib/R/site-library")
 
-print(.libPaths())
+print("print env")
+print(Sys.getenv("RVAR_URL"))
 
 # we will only scrape urls here. They have all the info we need.
 library(rvest)
