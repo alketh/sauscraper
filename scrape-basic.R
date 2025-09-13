@@ -25,7 +25,7 @@ can_links <- paste0(strsplit(Sys.getenv("RVAR_URL"), "/de/")[[1]][1], links)
 out <- tibble(url = can_links, created_at = Sys.time())
 
 # Add a testevent
-out <- create_testevent_simple()
+# out <- create_testevent_simple()
 
 print("db connect")
 
