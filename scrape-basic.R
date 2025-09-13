@@ -1,5 +1,7 @@
 # renv::restore()
 
+print(.libPaths())
+
 # .libPaths("/usr/local/lib/R/library")
 .libPaths("/usr/local/lib/R/site-library")
 
