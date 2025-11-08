@@ -98,6 +98,6 @@ if (check) {
 print("db pull")
 
 dd <- dbGetQuery(con, "select * from events_simple")
-kable(dd)
+nrow(dd)
 
 dbDisconnect(con)
