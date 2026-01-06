@@ -101,3 +101,4 @@ dd <- dbGetQuery(con, "select * from events_simple")
 nrow(dd)
 
 dbDisconnect(con)
+
