@@ -94,7 +94,6 @@ if (check) {
   nn <- dbAppendTable(con, name = "events_simple", value = add)
 }
 
-
 # display all events
 print("db pull")
 
@@ -102,4 +101,3 @@ dd <- dbGetQuery(con, "select * from events_simple")
 nrow(dd)
 
 dbDisconnect(con)
-
